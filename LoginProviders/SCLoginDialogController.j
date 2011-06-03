@@ -443,7 +443,17 @@ SCLoginFailed = 1;
     _delegate = aDelegate;
     _callback = aCallback;
     _dialogReturnCode = SCLoginFailed;
-    [self _setDialogModeToLoginOrRegister];
+  
+    if ([[CPBundle mainBundle] objectForInfoDictionaryKey:@"SCAuthRegistrationURL"])
+    {
+        [self _setDialogModeToLoginOrRegister];
+    }    
+    else
+    {
+        [[self window] setTitle:"Login"];
+        [self _setDialogModeToLogin];
+    }
+
     [_passwordField setStringValue:""];
     [_passwordConfirmField setStringValue:""];
     [_window makeFirstResponder:_userField];
